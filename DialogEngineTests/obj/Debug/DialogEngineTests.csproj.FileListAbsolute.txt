@@ -1,0 +1,8 @@
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\bin\Debug\DialogEngineTests.dll
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\bin\Debug\DialogEngineTests.pdb
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\bin\Debug\DialogEngine.dll
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\bin\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\bin\Debug\DialogEngine.pdb
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\obj\Debug\DialogEngineTests.csprojResolveAssemblyReference.cache
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\obj\Debug\DialogEngineTests.dll
+D:\z_Unity Projects\DialogEngine\DialogEngineTests\obj\Debug\DialogEngineTests.pdb
