@@ -1,53 +1,38 @@
 ﻿using DialogEngine.Data;
 using DialogEngine.EngineModel;
 using DialogEngine.Model;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DialogEngine.Engine
 {
     public class ConversationDirector
     {
-        private StatementLinkAccess StatementLinkAccess { get; set; }
+        private StatementLinkAccess statementLinkAccess = new StatementLinkAccess();
+        private StatementAccess statmentAccess = new StatementAccess();
+        private ActorAccess actorAccess = new ActorAccess();
 
-        private ConversationPackage ConversationPackage { get; set; }
-
-        private StatementLink CurrentStatementLink { get; set; }
+        private ConversationData ConversationPackage { get; set; }
 
 
-        public ConversationDirector()
-        {
-            StatementLinkAccess = new StatementLinkAccess();
-        }
-
-        public void Start(ConversationPackage package)
+        public void Start(ConversationData package)
         {
             ConversationPackage = package;
-            CurrentStatementLink = GetStatementLinkByID(ConversationPackage.Conversation.StatementLinkID);
         }
 
-        public void Advance(Statement ChosenStatement)
+        public ConversationResult Advance(ConversationAction Action)
         {
-            var nextLinkID = StatementLinkAccess.GetStatementLinkByStatementID(CurrentStatementLink, ChosenStatement.ID);
-            var nextLink = StatementLinkAccess.GetStatementLinkByID(ConversationPackage.StatementLinks, nextLinkID);
-            //analyze current statementlink, determine options, actor, ect
-            //get the active actor
-            //get the active/available statements
-        }
+            var nextLinkID = 
+                statementLinkAccess.GetStatementLinkByStatementID(Action.CurrentStatementLink, Action.ChosenStatement.ID);
+            var nextLink = 
+                statementLinkAccess.GetStatementLinkByID(ConversationPackage.StatementLinks, nextLinkID);
+            var statements = 
+                statmentAccess.GetStatementsInStatementLink(nextLink, ConversationPackage.Statements);
 
-        public void End()
-        {
+            var result = new ConversationResult();
+            result.CurrentStatementLink = nextLink;
+            result.Statements = statements;
+            //needs actor
 
-        }
-
-        public StatementLink GetStatementLinkByID(uint Id)
-        {
-            return null;
-        }
-
-        public Actor GetActorByID(uint Id)
-        {
-            return null;
+            return result;
         }
     }
 }

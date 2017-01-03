@@ -9,10 +9,10 @@ namespace DialogEngine.Model
         [XmlAttribute]
         public uint ID { get; set; }
         [XmlElement("Link")]
-        public List<Links> Links { get; set; }
+        public List<Link> Links { get; set; }
     }
 
-    public class Links
+    public class Link
     {
         [XmlAttribute]
         public uint StatementID { get; set; }

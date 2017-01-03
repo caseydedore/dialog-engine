@@ -10,6 +10,11 @@ namespace DialogEngine.Data
 {
     public class StatementLinkAccess
     {
+        public StatementLink GetStatementLink(uint statementLinkId, List<StatementLink> links)
+        {
+            return links.Where(l => l.ID == statementLinkId).Select(l => l).FirstOrDefault();
+        }
+
         public uint GetStatementLinkByStatementID(StatementLink link, uint statementId)
         {
             return 

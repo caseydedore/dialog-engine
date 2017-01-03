@@ -6,6 +6,7 @@ namespace DialogEngine.EngineModel
     public class ConversationResult
     {
         public Actor CurrentActor { get; set; }
+        public StatementLink CurrentStatementLink { get; set; }
         public List<Statement> Statements { get; set; }
     }
 }

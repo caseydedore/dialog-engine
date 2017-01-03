@@ -40,9 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\ActorAccess.cs" />
+    <Compile Include="Data\StatementAccess.cs" />
     <Compile Include="Data\StatementLinkAccess.cs" />
     <Compile Include="EngineModel\ConversationAction.cs" />
-    <Compile Include="EngineModel\ConversationPackage.cs" />
+    <Compile Include="EngineModel\ConversationData.cs" />
     <Compile Include="Engine\ConversationDirector.cs" />
     <Compile Include="Model\Actor.cs" />
     <Compile Include="Model\Attitude.cs" />
