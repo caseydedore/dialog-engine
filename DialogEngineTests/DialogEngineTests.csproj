@@ -50,10 +50,15 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ActorAccessTests.cs" />
+    <Compile Include="Data\ActorBuilder.cs" />
+    <Compile Include="Data\ModelBuilder.cs" />
     <Compile Include="Data\NumberGenerator.cs" />
     <Compile Include="Data\StatementBuilder.cs" />
+    <Compile Include="Data\StatementLinkBuilder.cs" />
     <Compile Include="StatementAccessTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatementLinkAccessTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DialogEngine\DialogEngine.csproj">

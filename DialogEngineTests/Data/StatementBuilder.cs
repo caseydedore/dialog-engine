@@ -7,10 +7,8 @@ using System.Threading.Tasks;
 
 namespace DialogEngineTests.Data
 {
-    public class StatementBuilder
+    public class StatementBuilder : ModelBuilder
     {
-        private NumberGenerator numberGenerator = new NumberGenerator();
-
         public Statement GetNewStatement(uint id)
         {
             var statement = new Statement();

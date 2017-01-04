@@ -8,9 +8,9 @@ namespace DialogEngine.Data
     {
         public List<Statement> GetStatementsInStatementLink(StatementLink link, List<Statement> statements)
         {
-            var ids = link.Links.Select(l => l.StatementID) as List<uint>;
+            var ids = link.Links.Select(l => l.StatementID).ToList();
 
-            return statements.Where(s => ids.Any(i => s.ID == i)) as List<Statement>;
+            return statements.Where(s => ids.Any(i => s.ID == i)).ToList();
         }
 
         public Statement GetStatement(uint statementId, List<Statement> statements)

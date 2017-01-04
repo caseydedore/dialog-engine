@@ -22,11 +22,5 @@ namespace DialogEngine.Data
                 .Select(l => l.NextLinkID)
                 .FirstOrDefault();
         }
-
-        public StatementLink GetStatementLinkByID(List<StatementLink> links, uint linkId)
-        {
-            return
-                links.Where(l => l.ID == linkId).Select(l => l).FirstOrDefault();
-        }
     }
 }
