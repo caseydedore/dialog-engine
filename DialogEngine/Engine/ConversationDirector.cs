@@ -1,21 +1,20 @@
 ﻿using DialogEngine.Data;
 using DialogEngine.EngineModel;
-using DialogEngine.Model;
 
 namespace DialogEngine.Engine
 {
     public class ConversationDirector
     {
         private StatementLinkAccess statementLinkAccess = new StatementLinkAccess();
-        private StatementAccess statmentAccess = new StatementAccess();
+        private StatementAccess statementAccess = new StatementAccess();
         private ActorAccess actorAccess = new ActorAccess();
 
-        private ConversationData ConversationPackage { get; set; }
+        private ConversationData ConversationData { get; }
 
 
-        public void Start(ConversationData package)
+        public ConversationDirector (ConversationData package)
         {
-            ConversationPackage = package;
+            ConversationData = package;
         }
 
         public ConversationResult Advance(ConversationAction action)
@@ -27,12 +26,20 @@ namespace DialogEngine.Engine
         {
             var nextLinkID =
                 statementLinkAccess.GetStatementLinkByStatementID(action.CurrentStatementLink, action.ChosenStatement.ID);
+
             var nextLink =
-                statementLinkAccess.GetStatementLink(nextLinkID, ConversationPackage.StatementLinks);
+                statementLinkAccess.GetStatementLink(nextLinkID, ConversationData.StatementLinks);
+
             var statements =
-                statmentAccess.GetStatementsInStatementLink(nextLink, ConversationPackage.Statements);
+                statementAccess.GetStatementsInStatementLink(nextLink, ConversationData.Statements);
+
+            //Condition checking needs to occur.
+            //They're intended to cull the possible FUTURE options that are given in response to the CURRENT chosen statement.
+            //The chosen statement needs known before condition checking, or all future link options would be checked early.
+            //Is this feasible?
+
             var actor =
-                actorAccess.GetActor(nextLinkID, ConversationPackage.Actors);
+                actorAccess.GetActor(nextLinkID, ConversationData.Actors);
 
             var result = new ConversationResult();
             result.CurrentStatementLink = nextLink;
