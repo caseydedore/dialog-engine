@@ -10,5 +10,16 @@ namespace DialogEngine.EngineModel
         public List<StatementLink> StatementLinks { get; set; }
         public List<Statement> Statements { get; set; }
         public List<Attitude> Attitudes { get; set; }
+        public List<Condition> Conditions { get; set; }
+
+
+        public ConversationData()
+        {
+            Actors = new List<Actor>();
+            StatementLinks = new List<StatementLink>();
+            Statements = new List<Statement>();
+            Attitudes = new List<Attitude>();
+            Conditions = new List<Condition>();
+        }
     }
 }

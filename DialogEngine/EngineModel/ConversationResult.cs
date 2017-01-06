@@ -8,5 +8,6 @@ namespace DialogEngine.EngineModel
         public Actor CurrentActor { get; set; }
         public StatementLink CurrentStatementLink { get; set; }
         public List<Statement> Statements { get; set; }
+        public List<string> NextTurnConditions { get; set; }
     }
 }
