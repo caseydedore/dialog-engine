@@ -9,7 +9,7 @@ namespace DialogEngine.EngineModel
         public List<Actor> Actors { get; set; }
         public List<StatementLink> StatementLinks { get; set; }
         public List<Statement> Statements { get; set; }
-        public List<Attitude> Attitudes { get; set; }
+        //public List<Attitude> Attitudes { get; set; }
         public List<Condition> Conditions { get; set; }
 
 
@@ -18,7 +18,7 @@ namespace DialogEngine.EngineModel
             Actors = new List<Actor>();
             StatementLinks = new List<StatementLink>();
             Statements = new List<Statement>();
-            Attitudes = new List<Attitude>();
+            //Attitudes = new List<Attitude>();
             Conditions = new List<Condition>();
         }
     }

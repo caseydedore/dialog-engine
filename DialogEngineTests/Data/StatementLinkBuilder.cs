@@ -23,7 +23,7 @@ namespace DialogEngineTests.Data
                     StatementID = (uint)i,
                     NextLinkID = (uint)i * 2,
                     ActorID = (uint)i * 3,
-                    Condition = Guid.NewGuid().ToString()
+                    //Conditions = 
                 };
 
                 link.Links.Add(childLink);

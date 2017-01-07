@@ -9,9 +9,9 @@ namespace DialogEngine.Data
 {
     public class ConditionAccess
     {
-        public Condition GetCondition(uint id, List<Condition> conditions)
-        {
-            return conditions.Where(c => c.ID == id).Select(c => c).FirstOrDefault();
-        }
+        //public Condition GetCondition(uint id, List<Condition> conditions)
+        //{
+        //    return conditions.Where(c => c.ID == id).Select(c => c).FirstOrDefault();
+        //}
     }
 }

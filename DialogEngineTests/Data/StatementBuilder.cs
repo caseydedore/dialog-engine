@@ -14,7 +14,7 @@ namespace DialogEngineTests.Data
             var statement = new Statement();
             statement.ID = id;
             statement.Dialog = Guid.NewGuid().ToString();
-            statement.AttitudeID = (uint)numberGenerator.GetRandomInt(0, 100);
+            //statement.AttitudeID = (uint)numberGenerator.GetRandomInt(0, 100);
 
             return statement;
         }

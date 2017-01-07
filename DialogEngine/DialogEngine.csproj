@@ -46,7 +46,7 @@
     <Compile Include="Data\StatementLinkAccess.cs" />
     <Compile Include="EngineModel\ConversationAction.cs" />
     <Compile Include="EngineModel\ConversationData.cs" />
-    <Compile Include="Engine\ConditionEvaluator.cs" />
+    <Compile Include="Engine\ConditionManager.cs" />
     <Compile Include="Engine\ConversationDirector.cs" />
     <Compile Include="Model\Actor.cs" />
     <Compile Include="Model\Attitude.cs" />
