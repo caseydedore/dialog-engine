@@ -7,13 +7,6 @@ using System.Xml.Serialization;
 
 namespace DialogEngine.Model
 {
-    [XmlRoot]
-    public class Conditions
-    {
-        [XmlElement("Condition")]
-        public List<Condition> Items { get; set; }
-    }
-
     public class Condition
     {
         [XmlAttribute]

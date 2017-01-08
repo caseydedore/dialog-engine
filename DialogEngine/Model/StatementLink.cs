@@ -27,8 +27,8 @@ namespace DialogEngine.Model
         [XmlAttribute]
         public uint NextLinkID { get; set; }
         [XmlElement]
-        public Condition Condition { get; set; } 
+        public ConditionRequirement Requirement { get; set; } 
         [XmlElement]
-        public Condition ConditionModifier { get; set; }
+        public ConditionModifier Modifier { get; set; }
     }
 }

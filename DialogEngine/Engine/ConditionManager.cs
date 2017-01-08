@@ -1,14 +1,12 @@
 ﻿using DialogEngine.Model;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DialogEngine.Engine
 {
     public class ConditionManager
     {
+        private ConditionEvaluator conditionEvaluator = new ConditionEvaluator();
         private List<Condition> Values { get; set; }
 
 
@@ -17,13 +15,21 @@ namespace DialogEngine.Engine
             Values = startingConditions;
         }
 
-        public bool ModifyCondition(string name, int modifier)
+        public void ModifyConditions(List<ConditionModifier> modifiers)
         {
-            var condition = GetCondition(name);
+            foreach(var m in modifiers)
+            {
+                ModifyCondition(m);
+            }
+        }
+
+        public bool ModifyCondition(ConditionModifier modifier)
+        {
+            var condition = GetCondition(modifier.Name);
 
             if (condition == null) return false;
 
-            condition.Value += modifier;
+            condition.Value += modifier.Value;
 
             if (condition.Value < condition.Min) condition.Value = condition.Min;
             if (condition.Value > condition.Max) condition.Value = condition.Max;
@@ -43,6 +49,23 @@ namespace DialogEngine.Engine
         private Condition GetCondition(string name)
         {
             return Values.Where(c => c.Name == name).Select(c => c).FirstOrDefault();
+        }
+
+        public List<ConditionRequirement> GetFailedRequirements(List<ConditionRequirement> requirements)
+        {
+            var failed = new List<ConditionRequirement>();
+
+            Condition condition = null;
+
+            foreach(var req in requirements)
+            {
+                condition = Values.Where(c => c.Name == req.Name).Select(c => c).FirstOrDefault();
+
+                if (!conditionEvaluator.CheckRequirementSuccess(req, condition))
+                    failed.Add(req);
+            }
+
+            return failed;
         }
     }
 }
