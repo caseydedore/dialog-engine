@@ -1,9 +1,6 @@
 ﻿using DialogEngine.Model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DialogEngineTests.Data
 {
@@ -14,7 +11,6 @@ namespace DialogEngineTests.Data
             var statement = new Statement();
             statement.ID = id;
             statement.Dialog = Guid.NewGuid().ToString();
-            //statement.AttitudeID = (uint)numberGenerator.GetRandomInt(0, 100);
 
             return statement;
         }

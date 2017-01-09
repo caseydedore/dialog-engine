@@ -25,7 +25,6 @@ namespace DialogEngineTests
 
             Assert.AreEqual(statement.ID, retrievedStatement.ID);
             Assert.AreEqual(statement.Dialog, retrievedStatement.Dialog);
-            //Assert.AreEqual(statement.AttitudeID, retrievedStatement.AttitudeID);
         }
     }
 }

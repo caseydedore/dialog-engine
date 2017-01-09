@@ -34,7 +34,6 @@ namespace DialogEngineTests
                 Assert.AreEqual(link.Links[i].StatementID, retrievedLink.Links[i].StatementID);
                 Assert.AreEqual(link.Links[i].NextLinkID, retrievedLink.Links[i].NextLinkID);
                 Assert.AreEqual(link.Links[i].ActorID, retrievedLink.Links[i].ActorID);
-                //Assert.AreEqual(link.Links[i].Conditions, retrievedLink.Links[i].Conditions);
             }
         }
 

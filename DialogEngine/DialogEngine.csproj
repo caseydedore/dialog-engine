@@ -50,7 +50,6 @@
     <Compile Include="Engine\ConditionManager.cs" />
     <Compile Include="Engine\ConversationDirector.cs" />
     <Compile Include="Model\Actor.cs" />
-    <Compile Include="Model\Attitude.cs" />
     <Compile Include="Model\Condition.cs" />
     <Compile Include="Model\ConditionModifier.cs" />
     <Compile Include="Model\ConditionRequirement.cs" />
