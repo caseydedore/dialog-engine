@@ -55,6 +55,7 @@
     <Compile Include="Data\ConversationDataBuilder.cs" />
     <Compile Include="Data\ModelBuilder.cs" />
     <Compile Include="Data\NumberGenerator.cs" />
+    <Compile Include="Data\RequirementBuilder.cs" />
     <Compile Include="Data\StatementBuilder.cs" />
     <Compile Include="Data\StatementLinkBuilder.cs" />
     <Compile Include="DialogEngineTests.cs" />

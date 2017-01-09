@@ -2,11 +2,7 @@
 using DialogEngine.Model;
 using DialogEngineTests.Data;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DialogEngineTests
 {
@@ -15,7 +11,10 @@ namespace DialogEngineTests
     {
         private StatementLinkBuilder builder = new StatementLinkBuilder();
         private StatementBuilder statementBuilder = new StatementBuilder();
+        private RequirementBuilder requirementBuilder = new RequirementBuilder();
         private StatementLinkAccess access = new StatementLinkAccess();
+
+        private NumberGenerator numberGenerator = new NumberGenerator();
 
 
         [TestMethod]
@@ -70,9 +69,68 @@ namespace DialogEngineTests
         }
 
         [TestMethod]
-        public void GetStatementLinkByStatementIDTest()
+        public void GetNextStatementLinkTest()
         {
-            //var retrievedLink = access.GetStatementLinkByStatementID();
+            var statements = statementBuilder.GetNewStatements();
+            var currentLink = builder.GetNewStatementLink(76);
+            var expectedLink = builder.GetNewStatementLink(909);
+
+            var index = 0;
+            foreach(var s in statements)
+            {
+                currentLink.Links.Add(new Link { StatementID = s.ID, NextLinkID = (uint)++index});
+            }
+
+            var targetStatement = statements[3];
+            currentLink.Links[3].NextLinkID = expectedLink.ID;
+
+            var retrievedLink = access.GetNextLinkIdForStatement(targetStatement.ID, currentLink);
+
+            Assert.AreEqual(expectedLink.ID, retrievedLink);
+        }
+
+        [TestMethod]
+        public void GetStatementIdsWithoutRequirements()
+        {
+            var requirements = requirementBuilder.GetNewRequirements(1);
+            var statements = statementBuilder.GetNewStatements(50);
+            var validStatements = statements.GetRange(3, 10);
+            validStatements.AddRange(statements.GetRange(44, 5));
+            var invalidStatements = statements.GetRange(0, 3);
+            invalidStatements.AddRange(statements.GetRange(13, 30));
+            invalidStatements.Add(statements[49]);
+            var link = new StatementLink();
+            
+            foreach(var s in invalidStatements)
+            {
+                link.Links.Add(new Link() { StatementID = s.ID, Requirement = requirements[0] });
+            }
+
+            foreach(var s in validStatements)
+            {
+                link.Links.Add(new Link(){ StatementID = s.ID });
+            }
+
+            var retrievedIds = access.GetStatementIdsWithoutRequirements(link, requirements);
+
+
+            Assert.AreEqual(validStatements.Count, retrievedIds.Count);
+            for(var i = 0; i < validStatements.Count; i++)
+            {
+                Assert.AreEqual(validStatements[i].ID, retrievedIds[i]);
+            }
+        }
+
+        [TestMethod]
+        public void GetModifiersForStatementTest()
+        {
+
+        }
+
+        [TestMethod]
+        public void GetRequirementsForStatementTest()
+        {
+
         }
     }
 }
