@@ -12,6 +12,7 @@ namespace DialogEngineTests
         private StatementLinkBuilder builder = new StatementLinkBuilder();
         private StatementBuilder statementBuilder = new StatementBuilder();
         private RequirementBuilder requirementBuilder = new RequirementBuilder();
+        private ModifierBuilder modifierBuilder = new ModifierBuilder();
         private StatementLinkAccess access = new StatementLinkAccess();
 
         private NumberGenerator numberGenerator = new NumberGenerator();
@@ -90,7 +91,7 @@ namespace DialogEngineTests
         }
 
         [TestMethod]
-        public void GetStatementIdsWithoutRequirements()
+        public void GetStatementsIdsWithoutRequirements()
         {
             var requirements = requirementBuilder.GetNewRequirements(1);
             var statements = statementBuilder.GetNewStatements(50);
@@ -103,7 +104,8 @@ namespace DialogEngineTests
             
             foreach(var s in invalidStatements)
             {
-                link.Links.Add(new Link() { StatementID = s.ID, Requirement = requirements[0] });
+                link.Links.Add(
+                    new Link() { StatementID = s.ID, Requirements = new List<ConditionRequirement> { requirements[0] } });
             }
 
             foreach(var s in validStatements)
@@ -124,7 +126,28 @@ namespace DialogEngineTests
         [TestMethod]
         public void GetModifiersForStatementTest()
         {
+            var link = builder.GetNewStatementLink(908);
+            link.Links.Clear();
+            var statements = statementBuilder.GetNewStatements();
+            var modifiers = modifierBuilder.GetNewModifiers();
 
+            for (var i = 0; i < statements.Count; i++)
+            {
+                link.Links.Add(
+                    new Link() { StatementID = statements[i].ID, Modifiers = new List<ConditionModifier> { modifiers[i] } });
+            }
+
+            var targetStatement = statements[3];
+            var targetModifier = link.Links[3].Modifiers[0];
+
+            var retrievedModifiers = access.GetModifiersForStatement(targetStatement.ID, link);
+
+
+            foreach(var m in retrievedModifiers)
+            {
+                Assert.AreEqual(targetModifier.Name, m.Name);
+                Assert.AreEqual(targetModifier.Value, m.Value);
+            }
         }
 
         [TestMethod]

@@ -29,22 +29,28 @@ namespace DialogEngine.Data
         public List<uint> GetStatementIdsWithoutRequirements(StatementLink link, List<ConditionRequirement> requirements)
         {
             return 
-                link.Links.Where(l => l.Requirement == null || requirements.Any(r => r.Name != l.Requirement.Name))
+                link.Links.Where(l => requirements.Except(l.Requirements).Any())
                 .Select(l => l.StatementID).ToList();
+        }
+
+        public List<ConditionRequirement> GetRequirements(StatementLink link)
+        {
+            return
+                link.Links.SelectMany(l => l.Requirements).ToList();
         }
 
         public List<ConditionRequirement> GetRequirementsForStatement(uint statementId, StatementLink link)
         {
             return 
-                link.Links.Where(l => l.StatementID == statementId && l.Requirement != null)
-                .Select(l => l.Requirement).ToList();
+                link.Links.Where(l => l.StatementID == statementId)
+                .SelectMany(l => l.Requirements).ToList();
         }
 
         public List<ConditionModifier> GetModifiersForStatement(uint statementId, StatementLink link)
         {
             return 
-                link.Links.Where(l => l.StatementID == statementId && l.Modifier != null)
-                .Select(l => l.Modifier).ToList();
+                link.Links.Where(l => l.StatementID == statementId)
+                .SelectMany(l => l.Modifiers).ToList();
         }
     }
 }

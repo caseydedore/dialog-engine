@@ -42,7 +42,7 @@ namespace DialogEngine.Engine
             conditionManager.ModifyConditions(modifiers);
 
             var requirements =
-                statementLinkAccess.GetRequirementsForStatement(action.ChosenStatement.ID, action.CurrentStatementLink);
+                statementLinkAccess.GetRequirements(nextLink);
 
             var failedRequirements =
                 conditionManager.GetFailedRequirements(requirements);
