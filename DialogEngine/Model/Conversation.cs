@@ -12,5 +12,10 @@ namespace DialogEngine.Model
         public uint StatementLinkID { get; set; }
         [XmlArray("Actor")]
         public List<Actor> Actors { get; set; }
+
+        public Conversation()
+        {
+            Actors = new List<Actor>();
+        }
     }
 }

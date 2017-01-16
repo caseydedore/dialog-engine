@@ -20,6 +20,7 @@ namespace DialogEngine.Model
 
         public ConversationData()
         {
+            Conversation = new Conversation();
             Actors = new List<Actor>();
             StatementLinks = new List<StatementLink>();
             Statements = new List<Statement>();
