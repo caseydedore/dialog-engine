@@ -1,5 +1,6 @@
 ﻿using DialogEngine.Data;
 using DialogEngine.EngineModel;
+using DialogEngine.Model;
 
 namespace DialogEngine.Engine
 {

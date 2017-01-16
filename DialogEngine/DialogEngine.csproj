@@ -41,11 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\ActorAccess.cs" />
-    <Compile Include="Data\ConditionAccess.cs" />
     <Compile Include="Data\StatementAccess.cs" />
     <Compile Include="Data\StatementLinkAccess.cs" />
     <Compile Include="EngineModel\ConversationAction.cs" />
-    <Compile Include="EngineModel\ConversationData.cs" />
+    <Compile Include="Model\ConversationData.cs" />
     <Compile Include="Engine\ConditionEvaluator.cs" />
     <Compile Include="Engine\ConditionManager.cs" />
     <Compile Include="Engine\ConversationDirector.cs" />
@@ -53,7 +52,6 @@
     <Compile Include="Model\Condition.cs" />
     <Compile Include="Model\ConditionModifier.cs" />
     <Compile Include="Model\ConditionRequirement.cs" />
-    <Compile Include="Model\Conditions.cs" />
     <Compile Include="Model\Conversation.cs" />
     <Compile Include="EngineModel\ConversationResult.cs" />
     <Compile Include="Model\Statement.cs" />
