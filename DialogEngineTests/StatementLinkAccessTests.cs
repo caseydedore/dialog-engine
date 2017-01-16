@@ -153,7 +153,28 @@ namespace DialogEngineTests
         [TestMethod]
         public void GetRequirementsForStatementTest()
         {
+            var link = builder.GetNewStatementLink(908);
+            link.Links.Clear();
+            var statements = statementBuilder.GetNewStatements();
+            var requirements = requirementBuilder.GetNewRequirements();
 
+            for (var i = 0; i < statements.Count; i++)
+            {
+                link.Links.Add(
+                    new Link() { StatementID = statements[i].ID, Requirements = new List<ConditionRequirement> { requirements[i] } });
+            }
+
+            var targetStatement = statements[8];
+            var targetRequirement = link.Links[8].Requirements[0];
+
+            var retrievedRequirements = access.GetRequirementsForStatement(targetStatement.ID, link);
+
+
+            foreach (var r in retrievedRequirements)
+            {
+                Assert.AreEqual(targetRequirement.Name, r.Name);
+                Assert.AreEqual(targetRequirement.Value, r.Value);
+            }
         }
     }
 }
