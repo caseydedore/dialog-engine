@@ -8,13 +8,13 @@ namespace DialogEngine.Model
     {
         [XmlElement]
         public Conversation Conversation { get; set; }
-        [XmlElement]
+        [XmlArray]
         public List<Actor> Actors { get; set; }
-        [XmlElement]
+        [XmlArray]
         public List<StatementLink> StatementLinks { get; set; }
-        [XmlElement]
+        [XmlArray]
         public List<Statement> Statements { get; set; }
-        [XmlElement]
+        [XmlArray]
         public List<Condition> Conditions { get; set; }
 
 
