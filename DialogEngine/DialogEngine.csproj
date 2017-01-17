@@ -52,7 +52,6 @@
     <Compile Include="Model\Condition.cs" />
     <Compile Include="Model\ConditionModifier.cs" />
     <Compile Include="Model\ConditionRequirement.cs" />
-    <Compile Include="Model\Conversation.cs" />
     <Compile Include="EngineModel\ConversationResult.cs" />
     <Compile Include="Model\Statement.cs" />
     <Compile Include="Model\StatementLink.cs" />

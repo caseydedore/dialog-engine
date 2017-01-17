@@ -4,10 +4,10 @@ using System.Xml.Serialization;
 namespace DialogEngine.Model
 {
     [XmlRoot]
-    public class ConversationData
+    public class Conversation
     {
-        [XmlElement]
-        public Conversation Conversation { get; set; }
+        [XmlAttribute]
+        public uint StartingStatementLinkID { get; set; }
         [XmlArray]
         public List<Actor> Actors { get; set; }
         [XmlArray]
@@ -18,9 +18,8 @@ namespace DialogEngine.Model
         public List<Condition> Conditions { get; set; }
 
 
-        public ConversationData()
+        public Conversation()
         {
-            Conversation = new Conversation();
             Actors = new List<Actor>();
             StatementLinks = new List<StatementLink>();
             Statements = new List<Statement>();

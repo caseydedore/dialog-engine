@@ -12,10 +12,10 @@ namespace DialogEngine.Engine
 
         private ConditionManager conditionManager = null;
 
-        private ConversationData ConversationData { get; }
+        private Conversation ConversationData { get; }
 
 
-        public ConversationDirector(ConversationData package)
+        public ConversationDirector(Conversation package)
         {
             ConversationData = package;
             conditionManager = new ConditionManager(package.Conditions);

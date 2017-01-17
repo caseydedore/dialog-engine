@@ -22,7 +22,7 @@ namespace DialogEngineTests
             var currentLink = linkBuilder.GetNewStatementLink(99);
             var nextLink = linkBuilder.GetNewStatementLink(87);
             var action = new ConversationAction();
-            var conversationData = new ConversationData();
+            var conversationData = new Conversation();
 
             currentLink.Links.Add(new Link() { StatementID = chosenStatement.ID, NextLinkID = nextLink.ID });
             action.ChosenStatement = chosenStatement;
