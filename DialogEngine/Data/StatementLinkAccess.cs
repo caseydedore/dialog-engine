@@ -26,10 +26,10 @@ namespace DialogEngine.Data
             return statements.Where(s => ids.Any(i => s.ID == i)).ToList();
         }
 
-        public List<uint> GetStatementIdsWithoutRequirements(StatementLink link, List<ConditionRequirement> requirements)
+        public List<uint> GetStatementIDsWithoutRequirementsMatch(StatementLink link, List<ConditionRequirement> requirements)
         {
             return 
-                link.Links.Where(l => requirements.Except(l.Requirements).Any())
+                link.Links.Where(l => l.Requirements.Except(requirements).Any())
                 .Select(l => l.StatementID).ToList();
         }
 

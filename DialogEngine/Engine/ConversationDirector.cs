@@ -21,6 +21,11 @@ namespace DialogEngine.Engine
             conditionManager = new ConditionManager(package.Conditions);
         }
 
+        public ConversationResult Start()
+        {
+            return GetStartingConversationResult(ConversationData.StartingStatementLinkID);
+        }
+
         public ConversationResult Advance(ConversationAction action)
         {
             return GetConversationResultByAction(action);
@@ -35,7 +40,7 @@ namespace DialogEngine.Engine
                 statementLinkAccess.GetStatementLink(nextLinkID, ConversationData.StatementLinks);
 
             var actor =
-                actorAccess.GetActor(nextLinkID, ConversationData.Actors);
+                actorAccess.GetActor(nextLink.ActorID, ConversationData.Actors);
 
             var modifiers =
                 statementLinkAccess.GetModifiersForStatement(action.ChosenStatement.ID, action.CurrentStatementLink);
@@ -49,7 +54,7 @@ namespace DialogEngine.Engine
                 conditionManager.GetFailedRequirements(requirements);
 
             var statementIds =
-                statementLinkAccess.GetStatementIdsWithoutRequirements(action.CurrentStatementLink, failedRequirements);
+                statementLinkAccess.GetStatementIDsWithoutRequirementsMatch(action.CurrentStatementLink, failedRequirements);
 
             var statements =
                 statementAccess.GetStatements(statementIds, ConversationData.Statements);
@@ -58,6 +63,22 @@ namespace DialogEngine.Engine
             result.CurrentStatementLink = nextLink;
             result.Statements = statements;
             result.CurrentActor = actor;
+
+            return result;
+        }
+
+        private ConversationResult GetStartingConversationResult(uint statementLinkId)
+        {
+            var result = new ConversationResult();
+
+            result.CurrentStatementLink =
+                statementLinkAccess.GetStatementLink(statementLinkId, ConversationData.StatementLinks);
+
+            result.Statements =
+                statementLinkAccess.GetStatements(result.CurrentStatementLink, ConversationData.Statements);
+
+            result.CurrentActor =
+                actorAccess.GetActor(result.CurrentStatementLink.ActorID, ConversationData.Actors);
 
             return result;
         }

@@ -7,7 +7,7 @@ namespace DialogEngine.Model
     {
         [XmlAttribute]
         public uint ID { get; set; }
-        [XmlElement]
+        [XmlText]
         public string Dialog { get; set; }
     }
 }

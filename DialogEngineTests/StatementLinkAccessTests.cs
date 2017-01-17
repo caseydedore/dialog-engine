@@ -33,7 +33,6 @@ namespace DialogEngineTests
             {
                 Assert.AreEqual(link.Links[i].StatementID, retrievedLink.Links[i].StatementID);
                 Assert.AreEqual(link.Links[i].NextLinkID, retrievedLink.Links[i].NextLinkID);
-                Assert.AreEqual(link.Links[i].ActorID, retrievedLink.Links[i].ActorID);
             }
         }
 
@@ -113,7 +112,7 @@ namespace DialogEngineTests
                 link.Links.Add(new Link(){ StatementID = s.ID });
             }
 
-            var retrievedIds = access.GetStatementIdsWithoutRequirements(link, requirements);
+            var retrievedIds = access.GetStatementIDsWithoutRequirementsMatch(link, requirements);
 
 
             Assert.AreEqual(validStatements.Count, retrievedIds.Count);

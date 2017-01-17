@@ -8,6 +8,8 @@ namespace DialogEngine.Model
     {
         [XmlAttribute]
         public uint ID { get; set; }
+        [XmlAttribute]
+        public uint ActorID { get; set; }
         [XmlElement("Link")]
         public List<Link> Links { get; set; }
 
@@ -20,8 +22,6 @@ namespace DialogEngine.Model
 
     public class Link
     {
-        [XmlAttribute]
-        public uint ActorID { get; set; }
         [XmlAttribute]
         public uint StatementID { get; set; }
         [XmlAttribute]

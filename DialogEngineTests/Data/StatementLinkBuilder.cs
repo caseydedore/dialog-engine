@@ -21,9 +21,7 @@ namespace DialogEngineTests.Data
                 childLink = new Link()
                 {
                     StatementID = (uint)i,
-                    NextLinkID = (uint)i * 2,
-                    ActorID = (uint)i * 3
-                    //Conditions = 
+                    NextLinkID = (uint)i * 2
                 };
 
                 link.Links.Add(childLink);

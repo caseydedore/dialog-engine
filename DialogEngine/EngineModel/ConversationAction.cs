@@ -7,6 +7,5 @@ namespace DialogEngine.EngineModel
     {
         public StatementLink CurrentStatementLink { get; set; }
         public Statement ChosenStatement { get; set; }
-        public List<string> ConditionsSucceeded { get; set; }
     }
 }
