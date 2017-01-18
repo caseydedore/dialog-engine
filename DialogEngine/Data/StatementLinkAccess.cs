@@ -13,7 +13,7 @@ namespace DialogEngine.Data
 
         public uint GetNextLinkIdForStatement(uint statementId, StatementLink link)
         {
-            return 
+            return
                 link.Links.Where(l => l.StatementID == statementId)
                 .Select(l => l.NextLinkID)
                 .FirstOrDefault();
@@ -28,9 +28,22 @@ namespace DialogEngine.Data
 
         public List<uint> GetStatementIDsWithoutRequirementsMatch(StatementLink link, List<ConditionRequirement> requirements)
         {
-            return 
-                link.Links.Where(l => l.Requirements.Except(requirements).Any())
-                .Select(l => l.StatementID).ToList();
+            var combinedStatements = new Dictionary<uint, string>();
+
+            foreach(var l in link.Links)
+            {
+                if(l.Requirements.Count <= 0)
+                {
+                    combinedStatements.Add(l.StatementID, string.Empty);
+                }
+                foreach(var r in l.Requirements)
+                {
+                    combinedStatements.Add(l.StatementID, r.Name);
+                }
+            }
+
+            return combinedStatements.Where(s => !requirements.Any(r => r.Name == s.Value)).Select(s => s.Key).ToList();
+
         }
 
         public List<ConditionRequirement> GetRequirements(StatementLink link)
@@ -41,14 +54,14 @@ namespace DialogEngine.Data
 
         public List<ConditionRequirement> GetRequirementsForStatement(uint statementId, StatementLink link)
         {
-            return 
+            return
                 link.Links.Where(l => l.StatementID == statementId)
                 .SelectMany(l => l.Requirements).ToList();
         }
 
         public List<ConditionModifier> GetModifiersForStatement(uint statementId, StatementLink link)
         {
-            return 
+            return
                 link.Links.Where(l => l.StatementID == statementId)
                 .SelectMany(l => l.Modifiers).ToList();
         }

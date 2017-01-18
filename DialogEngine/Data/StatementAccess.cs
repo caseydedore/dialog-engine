@@ -13,7 +13,7 @@ namespace DialogEngine.Data
 
         public List<Statement> GetStatements(List<uint> statementIds, List<Statement> statements)
         {
-            return statements.Where(s => statements.Any(st => st.ID == s.ID)).ToList();
+            return statements.Where(s => statementIds.Contains(s.ID)).ToList();
         }
     }
 }
