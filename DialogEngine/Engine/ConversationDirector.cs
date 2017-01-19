@@ -1,6 +1,7 @@
 ﻿using DialogEngine.Data;
 using DialogEngine.EngineModel;
 using DialogEngine.Model;
+using System.Collections.Generic;
 
 namespace DialogEngine.Engine
 {
@@ -33,33 +34,41 @@ namespace DialogEngine.Engine
 
         private ConversationResult GetConversationResultByAction(ConversationAction action)
         {
-            var nextLinkID =
-                statementLinkAccess.GetNextLinkIdForStatement(action.ChosenStatement.ID, action.CurrentStatementLink);
+            var result = new ConversationResult(ConversationStatus.Active);
+            var actor = new Actor();
+            var nextLink = new StatementLink();
+            var statements = new List<Statement>();
 
-            var nextLink =
-                statementLinkAccess.GetStatementLink(nextLinkID, ConversationData.StatementLinks);
+            try
+            {
+                var nextLinkID =
+                    statementLinkAccess.GetNextLinkIdForStatement(action.ChosenStatement.ID, action.CurrentStatementLink);
 
-            var actor =
-                actorAccess.GetActor(nextLink.ActorID, ConversationData.Actors);
+                nextLink = statementLinkAccess.GetStatementLink(nextLinkID, ConversationData.StatementLinks);
 
-            var modifiers =
-                statementLinkAccess.GetModifiersForStatement(action.ChosenStatement.ID, action.CurrentStatementLink);
+                actor = actorAccess.GetActor(nextLink.ActorID, ConversationData.Actors);
 
-            conditionManager.ModifyConditions(modifiers);
+                var modifiers =
+                    statementLinkAccess.GetModifiersForStatement(action.ChosenStatement.ID, action.CurrentStatementLink);
 
-            var requirements =
-                statementLinkAccess.GetRequirements(nextLink);
+                conditionManager.ModifyConditions(modifiers);
 
-            var failedRequirements =
-                conditionManager.GetFailedRequirements(requirements);
+                var requirements =
+                    statementLinkAccess.GetRequirements(nextLink);
 
-            var statementIds =
-                statementLinkAccess.GetStatementIDsExcludingRequirements(nextLink, failedRequirements);
+                var failedRequirements =
+                    conditionManager.GetFailedRequirements(requirements);
 
-            var statements =
-                statementAccess.GetStatements(statementIds, ConversationData.Statements);
+                var statementIds =
+                    statementLinkAccess.GetStatementIDsExcludingRequirements(nextLink, failedRequirements);
 
-            var result = new ConversationResult();
+                statements = statementAccess.GetStatements(statementIds, ConversationData.Statements);
+            }
+            catch
+            {
+                result = new ConversationResult(ConversationStatus.Terminated);
+            }
+            
             result.CurrentStatementLink = nextLink;
             result.Statements = statements;
             result.CurrentActor = actor;
@@ -69,16 +78,27 @@ namespace DialogEngine.Engine
 
         private ConversationResult GetStartingConversationResult(uint statementLinkId)
         {
-            var result = new ConversationResult();
+            var result = new ConversationResult(ConversationStatus.Active);
 
-            result.CurrentStatementLink =
-                statementLinkAccess.GetStatementLink(statementLinkId, ConversationData.StatementLinks);
+            var actor = new Actor();
+            var link = new StatementLink();
+            var statements = new List<Statement>();
+            try
+            {
+                link = statementLinkAccess.GetStatementLink(statementLinkId, ConversationData.StatementLinks);
 
-            result.Statements =
-                statementLinkAccess.GetStatements(result.CurrentStatementLink, ConversationData.Statements);
+                statements = statementLinkAccess.GetStatements(link, ConversationData.Statements);
 
-            result.CurrentActor =
-                actorAccess.GetActor(result.CurrentStatementLink.ActorID, ConversationData.Actors);
+                actor = actorAccess.GetActor(link.ActorID, ConversationData.Actors);
+            }
+            catch
+            {
+                result = new ConversationResult(ConversationStatus.Terminated);
+            }
+
+            result.CurrentActor = actor;
+            result.CurrentStatementLink = link;
+            result.Statements = statements;
 
             return result;
         }
