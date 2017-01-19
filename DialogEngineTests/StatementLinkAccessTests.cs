@@ -92,27 +92,30 @@ namespace DialogEngineTests
         [TestMethod]
         public void GetStatementsIdsWithoutRequirements()
         {
-            var requirements = requirementBuilder.GetNewRequirements(1);
+            var requirements = requirementBuilder.GetNewRequirements(5);
             var statements = statementBuilder.GetNewStatements(50);
             var validStatements = statements.GetRange(3, 10);
             validStatements.AddRange(statements.GetRange(44, 5));
             var invalidStatements = statements.GetRange(0, 3);
             invalidStatements.AddRange(statements.GetRange(13, 30));
             invalidStatements.Add(statements[49]);
+            var requirementsToExclude = requirements;
+            var requirementsToInclude = requirements.GetRange(3, 1);
+            requirementsToExclude.RemoveRange(3, 1);
+
             var link = new StatementLink();
-            
+
             foreach(var s in invalidStatements)
             {
-                link.Links.Add(
-                    new Link() { StatementID = s.ID, Requirements = new List<ConditionRequirement> { requirements[0] } });
+                link.Links.Add(new Link() { StatementID = s.ID, Requirements = requirementsToExclude });
             }
 
             foreach(var s in validStatements)
             {
-                link.Links.Add(new Link(){ StatementID = s.ID });
+                link.Links.Add(new Link(){ StatementID = s.ID, Requirements = requirementsToInclude });
             }
 
-            var retrievedIds = access.GetStatementIDsWithoutRequirementsMatch(link, requirements);
+            var retrievedIds = access.GetStatementIDsExcludingRequirements(link, requirements);
 
 
             Assert.AreEqual(validStatements.Count, retrievedIds.Count);

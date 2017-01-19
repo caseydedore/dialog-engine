@@ -26,24 +26,26 @@ namespace DialogEngine.Data
             return statements.Where(s => ids.Any(i => s.ID == i)).ToList();
         }
 
-        public List<uint> GetStatementIDsWithoutRequirementsMatch(StatementLink link, List<ConditionRequirement> requirements)
+        public List<uint> GetStatementIDsExcludingRequirements(StatementLink link, List<ConditionRequirement> requirements)
         {
-            var combinedStatements = new Dictionary<uint, string>();
+            var finalStatements = new List<uint>();
 
-            foreach(var l in link.Links)
+            foreach (var l in link.Links)
             {
-                if(l.Requirements.Count <= 0)
+                if (l.Requirements.Count <= 0)
                 {
-                    combinedStatements.Add(l.StatementID, string.Empty);
+                    finalStatements.Add(l.StatementID);
+                    continue;
                 }
-                foreach(var r in l.Requirements)
+
+                foreach (var r in l.Requirements)
                 {
-                    combinedStatements.Add(l.StatementID, r.Name);
+                    if (!requirements.Contains(r))
+                        finalStatements.Add(l.StatementID);
                 }
             }
 
-            return combinedStatements.Where(s => !requirements.Any(r => r.Name == s.Value)).Select(s => s.Key).ToList();
-
+            return finalStatements;
         }
 
         public List<ConditionRequirement> GetRequirements(StatementLink link)

@@ -54,7 +54,7 @@ namespace DialogEngine.Engine
                 conditionManager.GetFailedRequirements(requirements);
 
             var statementIds =
-                statementLinkAccess.GetStatementIDsWithoutRequirementsMatch(nextLink, failedRequirements);
+                statementLinkAccess.GetStatementIDsExcludingRequirements(nextLink, failedRequirements);
 
             var statements =
                 statementAccess.GetStatements(statementIds, ConversationData.Statements);
