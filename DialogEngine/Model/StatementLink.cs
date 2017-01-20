@@ -26,9 +26,9 @@ namespace DialogEngine.Model
         public uint StatementID { get; set; }
         [XmlAttribute]
         public uint NextLinkID { get; set; }
-        [XmlArray]
+        [XmlElement("Requirement")]
         public List<ConditionRequirement> Requirements { get; set; } 
-        [XmlArray]
+        [XmlElement("Modifier")]
         public List<ConditionModifier> Modifiers { get; set; }
 
         

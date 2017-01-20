@@ -8,24 +8,28 @@ namespace DialogEngine.Engine
     {
         public bool CheckRequirementSuccess(ConditionRequirement requirement, Condition matchingCondition)
         {
-            var result = true;
+            var result = false;
 
             switch (requirement.Operator)
             {
                 case ">":
-                    result = requirement.Value > matchingCondition.Value;
+                    result = matchingCondition.Value > requirement.Value;
                     break;
                 case ">=":
-                    result = requirement.Value >= matchingCondition.Value;
+                    result = matchingCondition.Value >= requirement.Value;
                     break;
                 case "<":
-                    result = requirement.Value < matchingCondition.Value;
+                    result = matchingCondition.Value < requirement.Value;
                     break;
                 case "<=":
-                    result = requirement.Value <= matchingCondition.Value;
+                    result = matchingCondition.Value <= requirement.Value;
                     break;
                 case "!=":
-                    result = requirement.Value != matchingCondition.Value;
+                    result = matchingCondition.Value != requirement.Value;
+                    break;
+                case "==":
+                case "=":
+                    result = matchingCondition.Value == requirement.Value;
                     break;
             }
 
