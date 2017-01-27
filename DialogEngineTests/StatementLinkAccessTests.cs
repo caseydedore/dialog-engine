@@ -126,6 +126,13 @@ namespace DialogEngineTests
         }
 
         [TestMethod]
+        public void GetStatementIdWithoutOneRequirementInMany()
+        {
+            //test for failing a statement that ONLY FAILS ONE of multiple requirements
+            Assert.Fail();
+        }
+
+        [TestMethod]
         public void GetModifiersForStatementTest()
         {
             var link = builder.GetNewStatementLink(908);

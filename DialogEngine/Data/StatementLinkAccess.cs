@@ -38,11 +38,19 @@ namespace DialogEngine.Data
                     continue;
                 }
 
+                var excludesRequirements = true;
+
                 foreach (var r in l.Requirements)
                 {
-                    if (!requirements.Contains(r))
-                        finalStatements.Add(l.StatementID);
+                    if (requirements.Contains(r))
+                    {
+                        excludesRequirements = false;
+                        break;
+                    }
                 }
+
+                if (excludesRequirements)
+                    finalStatements.Add(l.StatementID);
             }
 
             return finalStatements;
