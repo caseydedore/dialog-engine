@@ -29,7 +29,7 @@ namespace DialogEngineTests
             Assert.AreEqual(link.ID, retrievedLink.ID);
             Assert.AreEqual(link.Links, retrievedLink.Links);
 
-            for(var i = 0; i < link.Links.Count; i++)
+            for (var i = 0; i < link.Links.Count; i++)
             {
                 Assert.AreEqual(link.Links[i].StatementID, retrievedLink.Links[i].StatementID);
                 Assert.AreEqual(link.Links[i].NextLinkID, retrievedLink.Links[i].NextLinkID);
@@ -76,9 +76,9 @@ namespace DialogEngineTests
             var expectedLink = builder.GetNewStatementLink(909);
 
             var index = 0;
-            foreach(var s in statements)
+            foreach (var s in statements)
             {
-                currentLink.Links.Add(new Link { StatementID = s.ID, NextLinkID = (uint)++index});
+                currentLink.Links.Add(new Link { StatementID = s.ID, NextLinkID = (uint)++index });
             }
 
             var targetStatement = statements[3];
@@ -87,6 +87,41 @@ namespace DialogEngineTests
             var retrievedLink = access.GetNextLinkIdForStatement(targetStatement.ID, currentLink);
 
             Assert.AreEqual(expectedLink.ID, retrievedLink);
+        }
+
+        [TestMethod]
+        public void GetStatementIdWithNoRequirements()
+        {
+            var requirementsToFail = requirementBuilder.GetNewRequirements();
+
+            var link = builder.GetNewStatementLink(54, 1);
+            var statementId = 940u;
+            link.Links[0].StatementID = statementId;
+
+            var retrievedIds =
+                access.GetStatementIDsExcludingRequirements(link, requirementsToFail);
+
+            Assert.IsTrue(1 == retrievedIds.Count);
+            Assert.AreEqual(statementId, retrievedIds[0]);
+        }
+
+        [TestMethod]
+        public void NotGetStatementIdWithRequirement()
+        {
+            var requirementToFail = requirementBuilder.GetNewRequirement(12);
+            var requirementToPass = requirementBuilder.GetNewRequirement(31);
+
+            var link = builder.GetNewStatementLink(54, 1);
+            var statementId = 940u;
+            link.Links[0].StatementID = statementId;
+
+            link.Links[0].Requirements.Add(requirementToFail);
+            link.Links[0].Requirements.Add(requirementToPass);
+
+            var retrievedIds = 
+                access.GetStatementIDsExcludingRequirements(link, new List<ConditionRequirement> { requirementToFail });
+
+            Assert.IsTrue(0 == retrievedIds.Count);
         }
 
         [TestMethod]
@@ -105,31 +140,43 @@ namespace DialogEngineTests
 
             var link = new StatementLink();
 
-            foreach(var s in invalidStatements)
+            foreach (var s in invalidStatements)
             {
                 link.Links.Add(new Link() { StatementID = s.ID, Requirements = requirementsToExclude });
             }
 
-            foreach(var s in validStatements)
+            foreach (var s in validStatements)
             {
-                link.Links.Add(new Link(){ StatementID = s.ID, Requirements = requirementsToInclude });
+                link.Links.Add(new Link() { StatementID = s.ID, Requirements = requirementsToInclude });
             }
 
             var retrievedIds = access.GetStatementIDsExcludingRequirements(link, requirements);
 
 
             Assert.AreEqual(validStatements.Count, retrievedIds.Count);
-            for(var i = 0; i < validStatements.Count; i++)
+            for (var i = 0; i < validStatements.Count; i++)
             {
                 Assert.AreEqual(validStatements[i].ID, retrievedIds[i]);
             }
         }
 
         [TestMethod]
-        public void GetStatementIdWithoutOneRequirementInMany()
+        public void GetStatementIdWithoutRequirement()
         {
-            //test for failing a statement that ONLY FAILS ONE of multiple requirements
-            Assert.Fail();
+            var requirementToFail = requirementBuilder.GetNewRequirement(12);
+            var requirementToPass = requirementBuilder.GetNewRequirement(31);
+
+            var link = builder.GetNewStatementLink(54, 1);
+            var statementId = 940u;
+            link.Links[0].StatementID = statementId;
+
+            link.Links[0].Requirements.Add(requirementToPass);
+
+            var retrievedIds =
+                access.GetStatementIDsExcludingRequirements(link, new List<ConditionRequirement> { requirementToFail });
+
+            Assert.IsTrue(1 == retrievedIds.Count);
+            Assert.AreEqual(statementId, retrievedIds[0]);
         }
 
         [TestMethod]
@@ -152,7 +199,7 @@ namespace DialogEngineTests
             var retrievedModifiers = access.GetModifiersForStatement(targetStatement.ID, link);
 
 
-            foreach(var m in retrievedModifiers)
+            foreach (var m in retrievedModifiers)
             {
                 Assert.AreEqual(targetModifier.Name, m.Name);
                 Assert.AreEqual(targetModifier.Value, m.Value);
